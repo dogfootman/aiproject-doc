@@ -1,0 +1,87 @@
+name: Notify Source Repo on Spec Complete
+
+on:
+  issues:
+    types: [closed, labeled]
+
+env:
+  SOURCE_REPO: dogfootman/aiproject-src
+
+jobs:
+  notify-ready:
+    runs-on: ubuntu-latest
+    # spec 라벨이 있고, completed 라벨이 추가되었거나 이슈가 닫힌 경우
+    if: |
+      contains(github.event.issue.labels.*.name, 'spec') &&
+      (contains(github.event.issue.labels.*.name, 'completed') || github.event.action == 'closed')
+
+    steps:
+      - name: Extract Source Issue Number
+        id: extract
+        run: |
+          # Issue body에서 Source Issue 번호 추출
+          BODY="${{ github.event.issue.body }}"
+          SOURCE_ISSUE=$(echo "$BODY" | grep -oP 'issues/\K[0-9]+' | head -1)
+          echo "source_issue=$SOURCE_ISSUE" >> $GITHUB_OUTPUT
+          echo "Found source issue: $SOURCE_ISSUE"
+
+      - name: Add Label to Source Issue
+        if: steps.extract.outputs.source_issue != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          script: |
+            const [owner, repo] = process.env.SOURCE_REPO.split('/');
+            const issueNumber = ${{ steps.extract.outputs.source_issue }};
+
+            // ready-to-implement 라벨 추가
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              labels: ['ready-to-implement']
+            });
+
+            // spec-pending 라벨 제거
+            try {
+              await github.rest.issues.removeLabel({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                name: 'spec-pending'
+              });
+            } catch (e) {
+              console.log('spec-pending label not found, skipping removal');
+            }
+
+            // 코멘트 추가
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              body: `## ✅ Spec 작성 완료
+
+            Doc Repo에서 Spec 문서 작성이 완료되었습니다.
+
+            - **Spec Issue**: ${{ github.event.issue.html_url }}
+
+            ### 구현 시작 가이드
+
+            1. \`develop\` 브랜치에서 새 브랜치 생성
+               \`\`\`bash
+               git checkout develop
+               git pull origin develop
+               git checkout -b fix/${issueNumber}-description
+               \`\`\`
+
+            2. Spec 문서 참고하여 구현
+
+            3. PR 생성 시 이 이슈 연결
+               \`\`\`
+               Closes #${issueNumber}
+               \`\`\`
+
+            ---
+            🤖 *이 코멘트는 자동으로 생성되었습니다.*
+            `
+            });
