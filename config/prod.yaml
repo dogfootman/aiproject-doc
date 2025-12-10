@@ -1,0 +1,140 @@
+# Production 환경 설정
+# Purpose: 운영 환경
+# Version: 1.0.0
+
+environment: prod
+
+# Application Settings
+app:
+  name: "AI Project Manager"
+  debug: false
+  log_level: WARN
+
+# Database Configuration
+database:
+  type: postgresql
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  name: ${DB_NAME}
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  pool_size: 20
+  ssl: true
+  use_mock_data: false
+
+# Authentication
+auth:
+  enabled: true
+  bypass_login: false
+  session_timeout: 1800  # 30분 (초)
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 28800  # 8시간
+  lockout:
+    max_attempts: 5
+    lockout_duration: 1800  # 30분
+  password_policy:
+    min_length: 8
+    require_uppercase: true
+    require_lowercase: true
+    require_number: true
+    require_special: true
+
+# File Storage
+storage:
+  type: s3  # 또는 local/azure/gcs
+  s3:
+    bucket: ${S3_BUCKET}
+    region: ${S3_REGION}
+    access_key: ${S3_ACCESS_KEY}
+    secret_key: ${S3_SECRET_KEY}
+  max_file_size: 10MB
+  allowed_extensions:
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - pdf
+    - doc
+    - docx
+    - xls
+    - xlsx
+
+# External Services
+services:
+  email:
+    enabled: true
+    provider: smtp
+    smtp:
+      host: ${SMTP_HOST}
+      port: 587
+      username: ${SMTP_USERNAME}
+      password: ${SMTP_PASSWORD}
+      from: ${EMAIL_FROM}
+      use_tls: true
+  push_notification:
+    enabled: true
+    provider: fcm
+    fcm:
+      api_key: ${FCM_API_KEY}
+      project_id: ${FCM_PROJECT_ID}
+
+# Logging
+logging:
+  level: WARN
+  format: json
+  output: file
+  file_path: "/var/log/aiproject/app.log"
+  rotation:
+    max_size: 500MB
+    max_files: 30
+  # 운영 환경에서는 에러 알림 설정
+  error_notification:
+    enabled: true
+    channels:
+      - email
+      - slack
+
+# Feature Flags
+features:
+  authentication: true
+  menu_management: true
+  board_management: true
+  category_management: true
+  common_code: true
+  layout_management: true
+  notification: true
+  service_extension: true
+
+# CORS Settings
+cors:
+  enabled: true
+  allowed_origins:
+    - ${FRONTEND_URL}
+  allowed_methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+
+# Security Settings
+security:
+  https_only: true
+  hsts:
+    enabled: true
+    max_age: 31536000
+  csrf:
+    enabled: true
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+
+# Monitoring
+monitoring:
+  health_check:
+    enabled: true
+    endpoint: "/health"
+  metrics:
+    enabled: true
+    endpoint: "/metrics"

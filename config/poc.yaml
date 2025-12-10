@@ -1,0 +1,61 @@
+# PoC (Proof of Concept) 환경 설정
+# Purpose: 로컬 개발 및 빠른 프로토타이핑
+# Version: 1.0.0
+
+environment: poc
+
+# Application Settings
+app:
+  name: "AI Project Manager - PoC"
+  debug: true
+  log_level: INFO
+
+# Database Configuration
+database:
+  type: sqlite  # 또는 h2 (인메모리)
+  # SQLite 설정
+  sqlite:
+    path: "./data/poc.db"
+  # Mock 데이터 사용
+  use_mock_data: true
+  mock_data_path: "./data/mock/"
+
+# Authentication
+auth:
+  enabled: false  # PoC에서는 인증 우회
+  bypass_login: true
+  default_user:
+    id: "admin"
+    role: "ADMIN"
+
+# File Storage
+storage:
+  type: local
+  path: "./uploads/"
+  max_file_size: 10MB
+
+# External Services
+services:
+  email:
+    enabled: false
+    mock: true
+  push_notification:
+    enabled: false
+    mock: true
+
+# Logging
+logging:
+  level: INFO
+  format: simple
+  output: console
+
+# Feature Flags
+features:
+  authentication: false
+  menu_management: true
+  board_management: true
+  category_management: true
+  common_code: true
+  layout_management: false
+  notification: false
+  service_extension: false

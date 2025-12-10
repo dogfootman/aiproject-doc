@@ -1,0 +1,103 @@
+# Development 환경 설정
+# Purpose: 개발 및 통합 테스트 환경
+# Version: 1.0.0
+
+environment: dev
+
+# Application Settings
+app:
+  name: "AI Project Manager - Dev"
+  debug: true
+  log_level: DEBUG
+
+# Database Configuration
+database:
+  type: postgresql
+  host: localhost
+  port: 5432
+  name: aiproject_dev
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  pool_size: 5
+  use_mock_data: false
+
+# Authentication
+auth:
+  enabled: true
+  bypass_login: false
+  session_timeout: 3600  # 1시간 (초)
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400  # 24시간
+  test_accounts:
+    - id: "admin"
+      password: "admin123!"
+      role: "ADMIN"
+    - id: "user"
+      password: "user123!"
+      role: "USER"
+
+# File Storage
+storage:
+  type: local
+  path: "./uploads/"
+  max_file_size: 10MB
+  allowed_extensions:
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - pdf
+    - doc
+    - docx
+    - xls
+    - xlsx
+
+# External Services
+services:
+  email:
+    enabled: true
+    provider: smtp
+    smtp:
+      host: ${SMTP_HOST}
+      port: 587
+      username: ${SMTP_USERNAME}
+      password: ${SMTP_PASSWORD}
+      from: "noreply-dev@aiproject.local"
+  push_notification:
+    enabled: false
+    mock: true
+
+# Logging
+logging:
+  level: DEBUG
+  format: json
+  output: file
+  file_path: "./logs/app.log"
+  rotation:
+    max_size: 100MB
+    max_files: 10
+
+# Feature Flags
+features:
+  authentication: true
+  menu_management: true
+  board_management: true
+  category_management: true
+  common_code: true
+  layout_management: true
+  notification: true
+  service_extension: false
+
+# CORS Settings
+cors:
+  enabled: true
+  allowed_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+  allowed_methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS

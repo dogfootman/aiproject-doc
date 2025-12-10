@@ -75,7 +75,75 @@ Administrators can manage overall system settings (site name, logo, default lang
 
 ---
 
-### User Story 5 - Service Extension Management (Priority: P5)
+### User Story 5 - Category Management (Priority: P5)
+
+Administrators can manage hierarchical categories to organize content across the platform.
+
+**Why this priority**: Categories provide structure for organizing boards, posts, and other content types.
+
+**Independent Test**: Verify that administrators can create a category tree and posts can be assigned to categories.
+
+**Acceptance Scenarios**:
+
+1. **Given** logged in as an administrator, **When** creating a new category, **Then** the category is added to the category tree with the specified parent.
+2. **Given** an existing category tree, **When** modifying category order or hierarchy, **Then** changes are reflected immediately.
+3. **Given** a category with sub-categories exists, **When** deleting the parent category, **Then** sub-categories are either moved or deleted based on settings.
+4. **Given** content is assigned to a category, **When** filtering by category, **Then** only content in that category (and optionally sub-categories) is displayed.
+
+---
+
+### User Story 6 - Common Code Management (Priority: P6)
+
+Administrators can manage code-based data (dropdowns, status values, types) used throughout the system.
+
+**Why this priority**: Common codes provide standardized values for forms and data consistency.
+
+**Independent Test**: Verify that administrators can create a code group, add codes, and these codes appear in relevant dropdowns.
+
+**Acceptance Scenarios**:
+
+1. **Given** logged in as an administrator, **When** creating a new code group, **Then** the group is created with a unique identifier.
+2. **Given** a code group exists, **When** adding codes to the group, **Then** codes are added with name, value, and sort order.
+3. **Given** codes exist in a group, **When** accessing a form using that code group, **Then** codes are displayed as selectable options.
+4. **Given** a system code group exists, **When** attempting to delete it, **Then** deletion is prevented with an appropriate warning.
+
+---
+
+### User Story 7 - Layout Management (Priority: P7)
+
+Administrators can manage screen layouts and templates for consistent UI presentation.
+
+**Why this priority**: Layouts provide customizable presentation layer for different page types.
+
+**Independent Test**: Verify that administrators can create a layout template and apply it to pages.
+
+**Acceptance Scenarios**:
+
+1. **Given** logged in as an administrator, **When** creating a new layout template, **Then** the template is created with configurable regions.
+2. **Given** layout templates exist, **When** assigning a layout to a page, **Then** the page renders using that layout.
+3. **Given** a default layout exists, **When** no specific layout is assigned, **Then** pages use the default layout.
+4. **Given** a layout is in use, **When** modifying the layout, **Then** all pages using that layout reflect the changes.
+
+---
+
+### User Story 8 - Notification Management (Priority: P8)
+
+System sends notifications to users through various channels (in-app, email, push) based on events and settings.
+
+**Why this priority**: Notifications keep users informed about important events and updates.
+
+**Independent Test**: Verify that notifications are sent when triggering events occur and users can view their notification history.
+
+**Acceptance Scenarios**:
+
+1. **Given** notification settings are configured, **When** a triggering event occurs, **Then** notifications are sent through configured channels.
+2. **Given** a user has notifications, **When** accessing the notification center, **Then** all notifications are displayed with read/unread status.
+3. **Given** an unread notification exists, **When** the user reads it, **Then** the notification is marked as read.
+4. **Given** notification preferences exist, **When** the user modifies preferences, **Then** future notifications follow the new preferences.
+
+---
+
+### User Story 9 - Service Extension Management (Priority: P9)
 
 Administrators can activate/deactivate additional service modules as needed to extend platform functionality.
 
@@ -129,9 +197,33 @@ Administrators can activate/deactivate additional service modules as needed to e
 - **FR-018**: Administrators MUST be able to manage system notification settings
 - **FR-019**: System MUST record configuration change history
 
+**Category Management**
+- **FR-020**: Administrators MUST be able to create, modify, and delete categories
+- **FR-021**: System MUST support hierarchical category structure (multi-level)
+- **FR-022**: Administrators MUST be able to change category display order
+- **FR-023**: Content MUST be assignable to categories for organization
+
+**Common Code Management**
+- **FR-024**: Administrators MUST be able to create and manage code groups
+- **FR-025**: System MUST support adding codes with name, value, and sort order to groups
+- **FR-026**: System MUST prevent deletion of system-defined code groups
+- **FR-027**: Codes MUST be retrievable by group for use in forms and filters
+
+**Layout Management**
+- **FR-028**: Administrators MUST be able to create and manage layout templates
+- **FR-029**: System MUST support assigning layouts to pages
+- **FR-030**: System MUST provide a default layout for unassigned pages
+- **FR-031**: Layout changes MUST be reflected on all pages using that layout
+
+**Notification Management**
+- **FR-032**: System MUST support sending notifications via in-app, email, and push channels
+- **FR-033**: Users MUST be able to view notification history and read/unread status
+- **FR-034**: Users MUST be able to configure notification preferences
+- **FR-035**: System MUST trigger notifications based on configurable events
+
 **Service Extension**
-- **FR-020**: System MUST support activation/deactivation of additional service modules
-- **FR-021**: Activated services MUST automatically integrate with the menu system
+- **FR-036**: System MUST support activation/deactivation of additional service modules
+- **FR-037**: Activated services MUST automatically integrate with the menu system
 
 ### Key Entities
 
@@ -142,6 +234,11 @@ Administrators can activate/deactivate additional service modules as needed to e
 - **Post**: Content created by users. Includes title, content, author, creation date, modification date, and attachment information
 - **Attachment**: Files linked to posts. Includes filename, size, type, and storage path
 - **Setting**: System configuration items. Includes setting key, value, description, and change history
+- **Category**: Hierarchical content organizer. Includes category name, parent category, code, depth, and sort order
+- **CodeGroup**: Container for common codes. Includes group code, name, description, and system flag
+- **Code**: Individual code item. Includes code value, name, sort order, and active status
+- **Layout**: UI template configuration. Includes template name, type, configuration JSON, and default flag
+- **Notification**: User notification record. Includes type, title, content, channel, read status, and timestamps
 - **ServiceModule**: Extensible functional units. Includes module name, status, version, and dependency information
 
 ## Success Criteria *(mandatory)*
