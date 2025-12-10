@@ -46,14 +46,113 @@ aiproject-doc/                    # Spec Repository (현재)
 ```
 main (보호됨)
 │
-└── develop
+└── 작업 브랜치 (feature/enhancement/bugfix)
     │
-    ├── feature/001-service-platform-base
-    ├── enhancement/002-improve-auth
-    └── bugfix/003-fix-login
+    ├── 001-service-platform-base
+    ├── 002-improve-auth
+    └── 003-fix-login
 ```
 
-### 3. 커밋 메시지 규칙
+#### 브랜치 유형
+
+| 브랜치 유형 | 명명 규칙 | 용도 |
+|-------------|-----------|------|
+| main | `main` | 안정화된 릴리스 버전 (보호됨) |
+| feature | `NNN-feature-name` | 새 기능 개발 |
+| enhancement | `NNN-enhancement-name` | 기존 기능 개선 |
+| bugfix | `NNN-bugfix-name` | 버그 수정 |
+
+#### 브랜치 생성 규칙
+
+1. **작업 브랜치는 main에서 직접 분기**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b 001-service-platform-base
+   ```
+
+2. **브랜치 명명**: `[###]-[short-name]` 형식 사용
+   - 번호는 3자리로 패딩 (001, 002, ...)
+   - 소문자와 하이픈만 사용
+   - 예: `001-service-platform-base`, `002-user-auth`
+
+### 3. Main 브랜치 통합 전략
+
+#### 통합 조건
+
+작업 브랜치가 main에 통합되려면 다음 조건을 충족해야 합니다:
+
+| 조건 | 설명 |
+|------|------|
+| ✅ 명세서 완료 | spec.md, spec_kr.md 작성 완료 |
+| ✅ 계획서 완료 | plan.md, plan_kr.md 작성 완료 |
+| ✅ 작업 목록 완료 | tasks.md, tasks_kr.md 작성 완료 |
+| ✅ 리뷰 승인 | PR 리뷰 최소 1명 승인 |
+| ✅ Constitution 준수 | 프로젝트 헌법 원칙 준수 확인 |
+
+#### 통합 프로세스
+
+```
+1. 작업 브랜치에서 작업 완료
+       │
+       ▼
+2. PR 생성 (작업 브랜치 → main)
+       │
+       ▼
+3. 리뷰 요청 및 승인
+       │
+       ▼
+4. Squash and Merge
+       │
+       ▼
+5. 작업 브랜치 삭제 (선택)
+```
+
+#### PR 생성 방법
+
+```bash
+# 1. 작업 브랜치에서 최신 main 반영
+git checkout 001-service-platform-base
+git fetch origin
+git rebase origin/main
+
+# 2. 충돌 해결 후 push
+git push origin 001-service-platform-base --force-with-lease
+
+# 3. GitHub에서 PR 생성 또는 CLI 사용
+gh pr create --base main --head 001-service-platform-base \
+  --title "feat: 서비스 플랫폼 기반 어플리케이션 명세 완료" \
+  --body "## Summary
+- 기능 명세서 작성 완료
+- 구현 계획 수립 완료
+- 작업 목록 생성 완료
+
+## Checklist
+- [x] spec.md / spec_kr.md
+- [x] plan.md / plan_kr.md
+- [x] tasks.md / tasks_kr.md
+- [x] Constitution 준수 확인"
+```
+
+#### Merge 전략
+
+| 전략 | 사용 시점 |
+|------|-----------|
+| **Squash and Merge** (권장) | 작업 브랜치의 여러 커밋을 하나로 합쳐 main에 통합 |
+| Rebase and Merge | 커밋 히스토리를 선형으로 유지하고 싶을 때 |
+| Merge Commit | 브랜치 히스토리를 그대로 보존하고 싶을 때 |
+
+#### main 브랜치 보호 규칙 (권장)
+
+GitHub Repository Settings → Branches → Branch protection rules:
+
+- [x] Require a pull request before merging
+- [x] Require approvals (1명 이상)
+- [x] Dismiss stale pull request approvals when new commits are pushed
+- [x] Require status checks to pass before merging
+- [ ] Require branches to be up to date before merging
+
+### 4. 커밋 메시지 규칙
 
 ```
 <유형>: <설명>

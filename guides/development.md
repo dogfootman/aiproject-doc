@@ -46,14 +46,113 @@ aiproject-doc/                    # Spec Repository (Current)
 ```
 main (protected)
 │
-└── develop
+└── Working branches (feature/enhancement/bugfix)
     │
-    ├── feature/001-service-platform-base
-    ├── enhancement/002-improve-auth
-    └── bugfix/003-fix-login
+    ├── 001-service-platform-base
+    ├── 002-improve-auth
+    └── 003-fix-login
 ```
 
-### 3. Commit Message Convention
+#### Branch Types
+
+| Branch Type | Naming Convention | Purpose |
+|-------------|-------------------|---------|
+| main | `main` | Stable release version (protected) |
+| feature | `NNN-feature-name` | New feature development |
+| enhancement | `NNN-enhancement-name` | Existing feature improvements |
+| bugfix | `NNN-bugfix-name` | Bug fixes |
+
+#### Branch Creation Rules
+
+1. **Working branches fork directly from main**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b 001-service-platform-base
+   ```
+
+2. **Branch naming**: Use `[###]-[short-name]` format
+   - Numbers are 3-digit padded (001, 002, ...)
+   - Use lowercase and hyphens only
+   - Examples: `001-service-platform-base`, `002-user-auth`
+
+### 3. Main Branch Integration Strategy
+
+#### Integration Conditions
+
+Working branches must meet the following conditions to be merged into main:
+
+| Condition | Description |
+|-----------|-------------|
+| ✅ Spec Complete | spec.md, spec_kr.md completed |
+| ✅ Plan Complete | plan.md, plan_kr.md completed |
+| ✅ Tasks Complete | tasks.md, tasks_kr.md completed |
+| ✅ Review Approved | At least 1 PR review approval |
+| ✅ Constitution Compliance | Project constitution principles verified |
+
+#### Integration Process
+
+```
+1. Complete work on working branch
+       │
+       ▼
+2. Create PR (working branch → main)
+       │
+       ▼
+3. Request review and get approval
+       │
+       ▼
+4. Squash and Merge
+       │
+       ▼
+5. Delete working branch (optional)
+```
+
+#### PR Creation Method
+
+```bash
+# 1. Rebase working branch on latest main
+git checkout 001-service-platform-base
+git fetch origin
+git rebase origin/main
+
+# 2. Push after resolving conflicts
+git push origin 001-service-platform-base --force-with-lease
+
+# 3. Create PR via GitHub UI or CLI
+gh pr create --base main --head 001-service-platform-base \
+  --title "feat: Service platform base application spec complete" \
+  --body "## Summary
+- Feature specification completed
+- Implementation plan established
+- Task list generated
+
+## Checklist
+- [x] spec.md / spec_kr.md
+- [x] plan.md / plan_kr.md
+- [x] tasks.md / tasks_kr.md
+- [x] Constitution compliance verified"
+```
+
+#### Merge Strategy
+
+| Strategy | When to Use |
+|----------|-------------|
+| **Squash and Merge** (Recommended) | Combine multiple commits from working branch into one for main |
+| Rebase and Merge | When you want to keep commit history linear |
+| Merge Commit | When you want to preserve branch history as-is |
+
+#### Main Branch Protection Rules (Recommended)
+
+GitHub Repository Settings → Branches → Branch protection rules:
+
+- [x] Require a pull request before merging
+- [x] Require approvals (1 or more)
+- [x] Dismiss stale pull request approvals when new commits are pushed
+- [x] Require status checks to pass before merging
+- [ ] Require branches to be up to date before merging
+
+### 4. Commit Message Convention
 
 ```
 <type>: <description>
