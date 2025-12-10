@@ -2,25 +2,21 @@
 ============================================================================
 SYNC IMPACT REPORT
 ============================================================================
-Version Change: 0.0.0 → 1.0.0 (MAJOR - 초기 헌법 제정)
+Version Change: 1.0.0 → 1.1.0 (MINOR - 다국어 문서화 원칙 추가)
 
 Modified Principles:
-- [신규] I. 사양 우선 (Specification-First)
-- [신규] II. 반복적 개선 (Iterative Refinement)
-- [신규] III. 단순성 (Simplicity)
+- [신규] IV. 다국어 문서화 (Bilingual Documentation)
 
 Added Sections:
-- 핵심 원칙 (3개 원칙)
-- 작업 분류 체계
-- 개발 워크플로우
-- 거버넌스
+- 다국어 문서화 원칙
+- 문서 파일 명명 규칙
 
 Removed Sections:
-- 없음 (초기 버전)
+- 없음
 
 Templates Status:
 - ✅ plan-template.md - Constitution Check 섹션과 정렬됨
-- ✅ spec-template.md - 사용자 스토리 우선순위와 정렬됨
+- ✅ spec-template.md - 영문/한글 버전 분리 필요
 - ✅ tasks-template.md - 작업 분류 체계와 정렬됨
 
 Deferred Items:
@@ -75,6 +71,30 @@ Deferred Items:
 **근거:** 단순한 코드는 이해하기 쉽고, 유지보수 비용이 낮으며,
 버그 발생 가능성이 적다.
 
+### IV. 다국어 문서화 (Bilingual Documentation)
+
+모든 명세서와 PRD는 영문과 한글 두 가지 버전으로 작성한다.
+
+**규칙:**
+- 영문 버전이 기본(Primary)이며, 파일명에 접미사가 없다 (예: `spec.md`, `plan.md`)
+- 한글 버전은 `_kr` 접미사를 사용한다 (예: `spec_kr.md`, `plan_kr.md`)
+- 두 버전은 항상 동기화되어야 하며, 내용이 일치해야 한다
+- 새 문서 생성 시 영문/한글 버전을 동시에 생성한다
+- 문서 수정 시 양쪽 버전을 함께 업데이트한다
+
+**파일 명명 규칙:**
+
+| 문서 유형 | 영문 (Primary) | 한글 |
+|-----------|----------------|------|
+| 기능 명세서 | `spec.md` | `spec_kr.md` |
+| 구현 계획 | `plan.md` | `plan_kr.md` |
+| 작업 목록 | `tasks.md` | `tasks_kr.md` |
+| 기술 조사 | `research.md` | `research_kr.md` |
+| 데이터 모델 | `data-model.md` | `data-model_kr.md` |
+
+**근거:** 다국어 문서화는 글로벌 협업을 지원하고, 다양한 이해관계자가
+문서에 접근할 수 있게 하며, 프로젝트의 국제화 기반을 마련한다.
+
 ## 작업 분류 체계
 
 모든 작업은 다음 유형 중 하나로 분류되어야 한다:
@@ -110,11 +130,16 @@ Deferred Items:
 
 ```text
 specs/[###-feature-name]/
-├── spec.md           # 기능 명세서
-├── plan.md           # 구현 계획
-├── tasks.md          # 작업 목록
-├── research.md       # 기술 조사 (선택)
+├── spec.md           # 기능 명세서 (영문)
+├── spec_kr.md        # 기능 명세서 (한글)
+├── plan.md           # 구현 계획 (영문)
+├── plan_kr.md        # 구현 계획 (한글)
+├── tasks.md          # 작업 목록 (영문)
+├── tasks_kr.md       # 작업 목록 (한글)
+├── research.md       # 기술 조사 (선택, 영문)
+├── research_kr.md    # 기술 조사 (선택, 한글)
 ├── data-model.md     # 데이터 모델 (선택)
+├── checklists/       # 검증 체크리스트
 └── contracts/        # API 계약 (선택)
 ```
 
@@ -139,4 +164,4 @@ specs/[###-feature-name]/
 4. 관련 템플릿 동기화
 5. Sync Impact Report 작성
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-10 | **Last Amended**: 2025-12-10
+**Version**: 1.1.0 | **Ratified**: 2025-12-10 | **Last Amended**: 2025-12-10

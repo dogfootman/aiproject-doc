@@ -1,167 +1,167 @@
-# Feature Specification: 서비스 플랫폼 기반 어플리케이션
+# Feature Specification: Service Platform Base Application
 
 **Feature Branch**: `001-service-platform-base`
 **Created**: 2025-12-10
 **Status**: Draft
-**Input**: 서비스 제공의 기반이 되는 어플리케이션을 만들려고 한다. 기본기능으로는 환경설정, 인증관리, 메뉴관리, 게시판관리 등과 더 필요한 서비스를 관리하도록 한다.
+**Input**: Build a foundational application for service delivery. Core features include configuration management, authentication management, menu management, board management, and additional service management capabilities.
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 - 사용자 인증 및 로그인 (Priority: P1)
+### User Story 1 - User Authentication and Login (Priority: P1)
 
-관리자 또는 일반 사용자가 시스템에 안전하게 로그인하여 자신의 권한에 맞는 기능을 사용할 수 있다.
+Administrators or regular users can securely log in to the system and access features according to their permissions.
 
-**Why this priority**: 인증은 모든 기능의 기반이 되며, 보안과 직접적으로 연결됨. 인증 없이는 다른 기능을 안전하게 제공할 수 없음.
+**Why this priority**: Authentication is the foundation of all features and directly related to security. Without authentication, other features cannot be provided securely.
 
-**Independent Test**: 사용자가 아이디/비밀번호로 로그인하고, 로그인 성공 후 대시보드를 볼 수 있으며, 로그아웃할 수 있음을 확인.
+**Independent Test**: Verify that users can log in with ID/password, see the dashboard after successful login, and log out.
 
 **Acceptance Scenarios**:
 
-1. **Given** 등록된 사용자 계정이 있을 때, **When** 올바른 아이디와 비밀번호로 로그인하면, **Then** 시스템은 사용자를 인증하고 권한에 맞는 대시보드를 표시한다.
-2. **Given** 로그인된 상태일 때, **When** 로그아웃 버튼을 클릭하면, **Then** 세션이 종료되고 로그인 화면으로 이동한다.
-3. **Given** 잘못된 인증 정보를 입력했을 때, **When** 로그인을 시도하면, **Then** 적절한 오류 메시지가 표시되고 로그인이 거부된다.
-4. **Given** 비밀번호를 분실한 사용자가 있을 때, **When** 비밀번호 재설정을 요청하면, **Then** 등록된 이메일로 재설정 링크가 전송된다.
+1. **Given** a registered user account exists, **When** logging in with correct ID and password, **Then** the system authenticates the user and displays the appropriate dashboard based on their role.
+2. **Given** a logged-in state, **When** clicking the logout button, **Then** the session ends and redirects to the login screen.
+3. **Given** incorrect credentials are entered, **When** attempting to log in, **Then** an appropriate error message is displayed and login is denied.
+4. **Given** a user has forgotten their password, **When** requesting password reset, **Then** a reset link is sent to the registered email.
 
 ---
 
-### User Story 2 - 메뉴 관리 (Priority: P2)
+### User Story 2 - Menu Management (Priority: P2)
 
-관리자가 시스템의 메뉴 구조를 생성, 수정, 삭제하여 사용자에게 제공할 기능을 구성할 수 있다.
+Administrators can create, modify, and delete the system's menu structure to configure the features available to users.
 
-**Why this priority**: 메뉴는 사용자가 시스템 기능에 접근하는 주요 경로이며, 다른 기능(게시판 등)을 연결하는 프레임워크 역할을 함.
+**Why this priority**: Menus are the primary path for users to access system features and serve as the framework connecting other features (boards, etc.).
 
-**Independent Test**: 관리자가 새 메뉴를 생성하고, 해당 메뉴가 사용자에게 표시되며, 메뉴 순서를 변경할 수 있음을 확인.
+**Independent Test**: Verify that administrators can create a new menu, the menu is displayed to users, and menu order can be changed.
 
 **Acceptance Scenarios**:
 
-1. **Given** 관리자로 로그인한 상태에서, **When** 새 메뉴 항목을 생성하면, **Then** 메뉴 목록에 새 항목이 추가되고 사용자에게 표시된다.
-2. **Given** 기존 메뉴가 있을 때, **When** 메뉴 이름이나 순서를 수정하면, **Then** 변경사항이 즉시 반영된다.
-3. **Given** 삭제할 메뉴가 있을 때, **When** 해당 메뉴를 삭제하면, **Then** 메뉴 목록에서 제거되고 하위 메뉴도 함께 처리된다.
-4. **Given** 메뉴에 권한이 설정되어 있을 때, **When** 권한 없는 사용자가 접근하면, **Then** 해당 메뉴는 표시되지 않는다.
+1. **Given** logged in as an administrator, **When** creating a new menu item, **Then** the new item is added to the menu list and displayed to users.
+2. **Given** an existing menu exists, **When** modifying the menu name or order, **Then** changes are reflected immediately.
+3. **Given** a menu to delete exists, **When** deleting that menu, **Then** it is removed from the menu list and sub-menus are handled accordingly.
+4. **Given** permissions are set on a menu, **When** an unauthorized user attempts access, **Then** that menu is not displayed.
 
 ---
 
-### User Story 3 - 게시판 관리 (Priority: P3)
+### User Story 3 - Board Management (Priority: P3)
 
-관리자가 다양한 용도의 게시판을 생성하고, 사용자가 해당 게시판에서 글을 작성, 조회, 수정, 삭제할 수 있다.
+Administrators can create boards for various purposes, and users can create, view, edit, and delete posts on those boards.
 
-**Why this priority**: 게시판은 서비스의 핵심 컨텐츠 관리 기능이며, 공지사항, Q&A, 자료실 등 다양한 형태로 활용 가능.
+**Why this priority**: Boards are the core content management feature of the service and can be utilized in various forms such as announcements, Q&A, and file libraries.
 
-**Independent Test**: 관리자가 공지사항 게시판을 생성하고, 사용자가 글을 작성하며, 목록에서 해당 글을 조회할 수 있음을 확인.
+**Independent Test**: Verify that administrators can create an announcements board, users can write posts, and posts can be viewed in the list.
 
 **Acceptance Scenarios**:
 
-1. **Given** 관리자로 로그인한 상태에서, **When** 새 게시판을 생성하면, **Then** 게시판 유형(공지, Q&A, 자료실 등)과 권한을 설정할 수 있다.
-2. **Given** 게시판이 존재할 때, **When** 사용자가 글을 작성하면, **Then** 게시판 목록에 새 글이 표시된다.
-3. **Given** 게시글이 있을 때, **When** 작성자가 수정하면, **Then** 수정된 내용이 저장되고 수정 이력이 기록된다.
-4. **Given** 게시글이 있을 때, **When** 권한 있는 사용자가 삭제하면, **Then** 해당 글이 목록에서 제거된다.
-5. **Given** 게시판 목록이 있을 때, **When** 검색어를 입력하면, **Then** 제목과 내용에서 검색어가 포함된 글이 표시된다.
+1. **Given** logged in as an administrator, **When** creating a new board, **Then** board type (announcements, Q&A, file library, etc.) and permissions can be set.
+2. **Given** a board exists, **When** a user writes a post, **Then** the new post is displayed in the board list.
+3. **Given** a post exists, **When** the author edits it, **Then** the modified content is saved and edit history is recorded.
+4. **Given** a post exists, **When** an authorized user deletes it, **Then** the post is removed from the list.
+5. **Given** a board list exists, **When** entering a search term, **Then** posts containing the search term in title and content are displayed.
 
 ---
 
-### User Story 4 - 환경설정 관리 (Priority: P4)
+### User Story 4 - Configuration Management (Priority: P4)
 
-관리자가 시스템의 전반적인 설정(사이트명, 로고, 기본 언어, 알림 설정 등)을 관리할 수 있다.
+Administrators can manage overall system settings (site name, logo, default language, notification settings, etc.).
 
-**Why this priority**: 환경설정은 시스템 운영에 필수적이지만, 기본 기능들이 먼저 동작해야 의미가 있음.
+**Why this priority**: Configuration is essential for system operation, but basic features must work first for it to be meaningful.
 
-**Independent Test**: 관리자가 사이트명을 변경하고, 변경된 이름이 화면에 반영됨을 확인.
+**Independent Test**: Verify that administrators can change the site name and the change is reflected on the screen.
 
 **Acceptance Scenarios**:
 
-1. **Given** 관리자로 로그인한 상태에서, **When** 사이트 기본 정보를 수정하면, **Then** 변경사항이 저장되고 전체 시스템에 반영된다.
-2. **Given** 환경설정 화면에서, **When** 알림 설정을 변경하면, **Then** 해당 설정에 따라 알림이 발송된다.
-3. **Given** 환경설정 화면에서, **When** 설정 변경 후 저장하면, **Then** 변경 이력이 기록된다.
+1. **Given** logged in as an administrator, **When** modifying basic site information, **Then** changes are saved and reflected throughout the system.
+2. **Given** on the configuration screen, **When** changing notification settings, **Then** notifications are sent according to those settings.
+3. **Given** on the configuration screen, **When** saving after changing settings, **Then** change history is recorded.
 
 ---
 
-### User Story 5 - 서비스 확장 관리 (Priority: P5)
+### User Story 5 - Service Extension Management (Priority: P5)
 
-관리자가 필요에 따라 추가 서비스 모듈을 활성화/비활성화하여 플랫폼 기능을 확장할 수 있다.
+Administrators can activate/deactivate additional service modules as needed to extend platform functionality.
 
-**Why this priority**: 기본 기능이 안정화된 후 확장성을 제공하기 위한 기능.
+**Why this priority**: A feature to provide extensibility after basic features are stabilized.
 
-**Independent Test**: 관리자가 새 서비스 모듈을 활성화하고, 해당 기능이 메뉴에 추가되어 사용 가능함을 확인.
+**Independent Test**: Verify that administrators can activate a new service module and the feature is added to the menu and becomes available.
 
 **Acceptance Scenarios**:
 
-1. **Given** 비활성화된 서비스 모듈이 있을 때, **When** 관리자가 활성화하면, **Then** 해당 서비스 기능이 시스템에서 사용 가능해진다.
-2. **Given** 활성화된 서비스 모듈이 있을 때, **When** 관리자가 비활성화하면, **Then** 해당 서비스 기능이 숨겨지고 접근이 제한된다.
+1. **Given** a deactivated service module exists, **When** an administrator activates it, **Then** that service feature becomes available in the system.
+2. **Given** an activated service module exists, **When** an administrator deactivates it, **Then** that service feature is hidden and access is restricted.
 
 ---
 
 ### Edge Cases
 
-- 동시에 여러 관리자가 같은 메뉴/게시판 설정을 수정하면 어떻게 되는가? → 마지막 저장이 우선 적용되며, 충돌 시 알림 표시
-- 로그인 시도가 연속으로 실패하면 어떻게 되는가? → 5회 실패 후 계정 임시 잠금 및 관리자에게 알림
-- 삭제된 메뉴에 연결된 게시판이 있으면 어떻게 되는가? → 게시판은 유지되고, 다른 메뉴에 재연결 가능
-- 대용량 파일이 게시판에 첨부되면 어떻게 되는가? → 설정된 최대 파일 크기 제한 적용, 초과 시 업로드 거부
-- 세션이 만료되면 어떻게 되는가? → 현재 작업 내용 임시 저장 후 로그인 화면으로 이동
+- What happens when multiple administrators modify the same menu/board settings simultaneously? → Last save takes precedence, notification displayed on conflict
+- What happens when login attempts fail consecutively? → Account temporarily locked after 5 failures and administrator notified
+- What happens when a board is linked to a deleted menu? → Board is maintained and can be reconnected to another menu
+- What happens when a large file is attached to a board? → Maximum file size limit is applied, upload rejected if exceeded
+- What happens when a session expires? → Current work is temporarily saved and redirected to login screen
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-**인증 관리**
-- **FR-001**: 시스템은 사용자 계정 생성, 수정, 삭제 기능을 제공해야 한다
-- **FR-002**: 시스템은 아이디/비밀번호 기반 로그인을 지원해야 한다
-- **FR-003**: 사용자는 비밀번호 재설정을 요청할 수 있어야 한다
-- **FR-004**: 시스템은 역할 기반 접근 제어(관리자, 일반 사용자 등)를 지원해야 한다
-- **FR-005**: 시스템은 로그인 실패 시도를 기록하고 일정 횟수 초과 시 계정을 잠가야 한다
+**Authentication Management**
+- **FR-001**: System MUST provide user account creation, modification, and deletion functionality
+- **FR-002**: System MUST support ID/password-based login
+- **FR-003**: Users MUST be able to request password reset
+- **FR-004**: System MUST support role-based access control (administrator, regular user, etc.)
+- **FR-005**: System MUST record failed login attempts and lock account after certain number of failures
 
-**메뉴 관리**
-- **FR-006**: 관리자는 메뉴 항목을 생성, 수정, 삭제할 수 있어야 한다
-- **FR-007**: 시스템은 계층형 메뉴 구조(상위/하위 메뉴)를 지원해야 한다
-- **FR-008**: 관리자는 메뉴 표시 순서를 변경할 수 있어야 한다
-- **FR-009**: 메뉴 항목별로 접근 권한을 설정할 수 있어야 한다
-- **FR-010**: 시스템은 메뉴에 외부 링크 또는 내부 기능을 연결할 수 있어야 한다
+**Menu Management**
+- **FR-006**: Administrators MUST be able to create, modify, and delete menu items
+- **FR-007**: System MUST support hierarchical menu structure (parent/child menus)
+- **FR-008**: Administrators MUST be able to change menu display order
+- **FR-009**: Access permissions MUST be configurable per menu item
+- **FR-010**: System MUST be able to link external URLs or internal features to menus
 
-**게시판 관리**
-- **FR-011**: 관리자는 다양한 유형의 게시판(공지, Q&A, 자료실 등)을 생성할 수 있어야 한다
-- **FR-012**: 사용자는 게시글을 작성, 조회, 수정, 삭제할 수 있어야 한다
-- **FR-013**: 시스템은 게시글에 파일 첨부 기능을 제공해야 한다
-- **FR-014**: 시스템은 게시글 검색 기능(제목, 내용, 작성자)을 제공해야 한다
-- **FR-015**: 시스템은 게시글 목록의 페이지네이션을 지원해야 한다
-- **FR-016**: 게시판별로 읽기/쓰기 권한을 설정할 수 있어야 한다
+**Board Management**
+- **FR-011**: Administrators MUST be able to create various types of boards (announcements, Q&A, file library, etc.)
+- **FR-012**: Users MUST be able to create, view, edit, and delete posts
+- **FR-013**: System MUST provide file attachment functionality for posts
+- **FR-014**: System MUST provide post search functionality (title, content, author)
+- **FR-015**: System MUST support pagination for post lists
+- **FR-016**: Read/write permissions MUST be configurable per board
 
-**환경설정**
-- **FR-017**: 관리자는 사이트 기본 정보(명칭, 로고, 설명)를 설정할 수 있어야 한다
-- **FR-018**: 관리자는 시스템 알림 설정을 관리할 수 있어야 한다
-- **FR-019**: 시스템은 설정 변경 이력을 기록해야 한다
+**Configuration**
+- **FR-017**: Administrators MUST be able to set basic site information (name, logo, description)
+- **FR-018**: Administrators MUST be able to manage system notification settings
+- **FR-019**: System MUST record configuration change history
 
-**서비스 확장**
-- **FR-020**: 시스템은 추가 서비스 모듈의 활성화/비활성화를 지원해야 한다
-- **FR-021**: 활성화된 서비스는 자동으로 메뉴 시스템과 통합되어야 한다
+**Service Extension**
+- **FR-020**: System MUST support activation/deactivation of additional service modules
+- **FR-021**: Activated services MUST automatically integrate with the menu system
 
 ### Key Entities
 
-- **사용자(User)**: 시스템에 접근하는 개인. 아이디, 비밀번호, 이름, 이메일, 역할, 상태 정보를 포함
-- **역할(Role)**: 사용자에게 부여되는 권한 그룹. 역할명, 권한 목록, 설명을 포함
-- **메뉴(Menu)**: 시스템 네비게이션 항목. 메뉴명, 상위 메뉴, 순서, 연결 대상, 접근 권한을 포함
-- **게시판(Board)**: 게시글을 담는 컨테이너. 게시판명, 유형, 읽기/쓰기 권한, 설정 정보를 포함
-- **게시글(Post)**: 사용자가 작성한 컨텐츠. 제목, 내용, 작성자, 작성일, 수정일, 첨부파일 정보를 포함
-- **첨부파일(Attachment)**: 게시글에 연결된 파일. 파일명, 크기, 유형, 저장 경로를 포함
-- **환경설정(Setting)**: 시스템 설정 항목. 설정키, 설정값, 설명, 변경 이력을 포함
-- **서비스모듈(ServiceModule)**: 확장 가능한 기능 단위. 모듈명, 상태, 버전, 의존성 정보를 포함
+- **User**: An individual accessing the system. Includes ID, password, name, email, role, and status information
+- **Role**: A permission group assigned to users. Includes role name, permission list, and description
+- **Menu**: System navigation items. Includes menu name, parent menu, order, linked target, and access permissions
+- **Board**: A container for posts. Includes board name, type, read/write permissions, and configuration information
+- **Post**: Content created by users. Includes title, content, author, creation date, modification date, and attachment information
+- **Attachment**: Files linked to posts. Includes filename, size, type, and storage path
+- **Setting**: System configuration items. Includes setting key, value, description, and change history
+- **ServiceModule**: Extensible functional units. Includes module name, status, version, and dependency information
 
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
 
-- **SC-001**: 사용자는 30초 이내에 로그인을 완료할 수 있어야 한다
-- **SC-002**: 관리자는 5분 이내에 새 메뉴 구조를 생성하고 배포할 수 있어야 한다
-- **SC-003**: 관리자는 3분 이내에 새 게시판을 생성하고 사용자가 접근할 수 있어야 한다
-- **SC-004**: 사용자는 2분 이내에 게시글을 작성하고 등록할 수 있어야 한다
-- **SC-005**: 게시글 검색 결과는 2초 이내에 표시되어야 한다
-- **SC-006**: 시스템은 100명 이상의 동시 접속 사용자를 지원해야 한다
-- **SC-007**: 사용자의 95% 이상이 도움말 없이 기본 기능(로그인, 글쓰기, 검색)을 수행할 수 있어야 한다
-- **SC-008**: 새 서비스 모듈 활성화 후 1분 이내에 해당 기능이 사용 가능해야 한다
+- **SC-001**: Users MUST be able to complete login within 30 seconds
+- **SC-002**: Administrators MUST be able to create and deploy a new menu structure within 5 minutes
+- **SC-003**: Administrators MUST be able to create a new board and make it accessible to users within 3 minutes
+- **SC-004**: Users MUST be able to write and submit a post within 2 minutes
+- **SC-005**: Post search results MUST be displayed within 2 seconds
+- **SC-006**: System MUST support 100+ concurrent users
+- **SC-007**: 95%+ of users MUST be able to perform basic functions (login, writing, searching) without help documentation
+- **SC-008**: After activating a new service module, the feature MUST be available within 1 minute
 
 ## Assumptions
 
-- 시스템은 웹 기반 어플리케이션으로 제공된다
-- 인증 방식은 기본적으로 아이디/비밀번호 방식을 사용한다 (향후 SSO, OAuth 확장 가능)
-- 기본 역할은 관리자(Admin)와 일반 사용자(User) 두 가지로 시작한다
-- 데이터 보관 기간은 업계 표준을 따른다
-- 단일 언어(한국어)로 시작하며, 다국어 지원은 향후 확장 기능으로 고려한다
-- 파일 첨부 최대 크기는 10MB로 설정한다 (환경설정에서 변경 가능)
+- System is provided as a web-based application
+- Authentication uses ID/password method by default (SSO, OAuth extension possible in the future)
+- Basic roles start with two: Administrator (Admin) and Regular User (User)
+- Data retention period follows industry standards
+- Starts with single language (Korean), multilingual support considered as future extension
+- Maximum file attachment size is set to 10MB (configurable in settings)
