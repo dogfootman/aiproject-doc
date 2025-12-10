@@ -165,6 +165,98 @@ Types:
 - refactor: Code refactoring
 ```
 
+### 5. UI Development Guidelines
+
+#### Component-Based Development Principles
+
+All UI elements must be developed as **small, reusable components**.
+
+#### Component Classification (Atomic Design)
+
+| Category | Description | Examples |
+|----------|-------------|----------|
+| **Atoms** | Smallest indivisible units | Button, Input, Label, Icon |
+| **Molecules** | Simple combinations of Atoms | FormField, SearchBar, MenuItem |
+| **Organisms** | Complex combinations of Molecules | Header, Sidebar, DataTable |
+| **Templates** | Page layout structures | DashboardLayout, FormLayout |
+| **Pages** | Actual pages (with data) | LoginPage, UserListPage |
+
+#### Component Directory Structure
+
+```
+src/
+├── components/
+│   ├── atoms/
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.styles.ts
+│   │   │   ├── Button.types.ts
+│   │   │   └── index.ts
+│   │   ├── Input/
+│   │   └── ...
+│   ├── molecules/
+│   │   ├── FormField/
+│   │   ├── SearchBar/
+│   │   └── ...
+│   ├── organisms/
+│   │   ├── Header/
+│   │   ├── DataTable/
+│   │   └── ...
+│   └── templates/
+│       ├── DashboardLayout/
+│       └── ...
+└── pages/
+    ├── dashboard/
+    └── ...
+```
+
+#### Component Design Rules
+
+1. **Single Responsibility Principle**
+   - Each component should have only one purpose
+   - Break complex functionality into multiple components
+
+2. **Props Interface Definition**
+   ```typescript
+   // Button.types.ts
+   interface ButtonProps {
+     variant: 'primary' | 'secondary' | 'danger';
+     size: 'sm' | 'md' | 'lg';
+     disabled?: boolean;
+     onClick?: () => void;
+     children: React.ReactNode;
+   }
+   ```
+
+3. **Reusability First**
+   - Create generic components not tied to specific domains
+   - Use props to handle various scenarios
+
+4. **Style Separation**
+   - Separate styles into dedicated files (`*.styles.ts`)
+   - Use design tokens (colors, spacing, fonts, etc.)
+
+#### Component Naming Convention
+
+| Item | Rule | Example |
+|------|------|---------|
+| Component name | PascalCase | `DataTable`, `SearchBar` |
+| File name | PascalCase | `DataTable.tsx` |
+| Folder name | PascalCase | `DataTable/` |
+| Props type | ComponentName + Props | `DataTableProps` |
+| Style file | ComponentName.styles | `DataTable.styles.ts` |
+
+#### Component Creation Checklist
+
+Before creating a new component:
+
+- [ ] Check if a similar component already exists
+- [ ] Place in correct Atomic Design category
+- [ ] Define Props interface
+- [ ] Set default props
+- [ ] Consider accessibility (aria attributes, etc.)
+- [ ] Support responsive design
+
 ## Getting Started
 
 ### Prerequisites

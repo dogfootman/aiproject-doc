@@ -165,6 +165,98 @@ GitHub Repository Settings → Branches → Branch protection rules:
 - refactor: 코드 리팩토링
 ```
 
+### 5. UI 개발 지침
+
+#### 컴포넌트 기반 개발 원칙
+
+화면에 보여지는 모든 요소는 **재사용 가능한 작은 단위의 컴포넌트**로 개발합니다.
+
+#### 컴포넌트 분류 체계
+
+| 분류 | 설명 | 예시 |
+|------|------|------|
+| **Atoms** | 더 이상 분해할 수 없는 최소 단위 | Button, Input, Label, Icon |
+| **Molecules** | Atoms를 조합한 단순 컴포넌트 | FormField, SearchBar, MenuItem |
+| **Organisms** | Molecules를 조합한 복합 컴포넌트 | Header, Sidebar, DataTable |
+| **Templates** | 페이지 레이아웃 구조 | DashboardLayout, FormLayout |
+| **Pages** | 실제 페이지 (데이터 연결) | LoginPage, UserListPage |
+
+#### 컴포넌트 디렉토리 구조
+
+```
+src/
+├── components/
+│   ├── atoms/
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.styles.ts
+│   │   │   ├── Button.types.ts
+│   │   │   └── index.ts
+│   │   ├── Input/
+│   │   └── ...
+│   ├── molecules/
+│   │   ├── FormField/
+│   │   ├── SearchBar/
+│   │   └── ...
+│   ├── organisms/
+│   │   ├── Header/
+│   │   ├── DataTable/
+│   │   └── ...
+│   └── templates/
+│       ├── DashboardLayout/
+│       └── ...
+└── pages/
+    ├── dashboard/
+    └── ...
+```
+
+#### 컴포넌트 설계 규칙
+
+1. **단일 책임 원칙**
+   - 하나의 컴포넌트는 하나의 역할만 수행
+   - 복잡한 기능은 여러 컴포넌트로 분리
+
+2. **Props 인터페이스 정의**
+   ```typescript
+   // Button.types.ts
+   interface ButtonProps {
+     variant: 'primary' | 'secondary' | 'danger';
+     size: 'sm' | 'md' | 'lg';
+     disabled?: boolean;
+     onClick?: () => void;
+     children: React.ReactNode;
+   }
+   ```
+
+3. **재사용성 우선**
+   - 특정 도메인에 종속되지 않는 범용 컴포넌트 작성
+   - Props를 통해 다양한 상황에 대응
+
+4. **스타일 분리**
+   - 스타일은 별도 파일로 분리 (`*.styles.ts`)
+   - 디자인 토큰(색상, 간격, 폰트 등) 사용
+
+#### 컴포넌트 명명 규칙
+
+| 항목 | 규칙 | 예시 |
+|------|------|------|
+| 컴포넌트명 | PascalCase | `DataTable`, `SearchBar` |
+| 파일명 | PascalCase | `DataTable.tsx` |
+| 폴더명 | PascalCase | `DataTable/` |
+| Props 타입 | 컴포넌트명 + Props | `DataTableProps` |
+| 스타일 파일 | 컴포넌트명.styles | `DataTable.styles.ts` |
+
+#### 공통 컴포넌트 체크리스트
+
+새 컴포넌트 생성 시 확인:
+
+- [ ] 기존에 유사한 컴포넌트가 있는지 확인
+- [ ] Atomic Design 분류에 맞는 위치에 생성
+- [ ] Props 인터페이스 정의
+- [ ] 기본값(default props) 설정
+- [ ] 접근성(a11y) 고려 (aria 속성 등)
+- [ ] 반응형 디자인 지원
+
 ## 시작하기
 
 ### 사전 요구사항
