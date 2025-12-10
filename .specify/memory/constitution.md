@@ -1,50 +1,142 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+============================================================================
+SYNC IMPACT REPORT
+============================================================================
+Version Change: 0.0.0 → 1.0.0 (MAJOR - 초기 헌법 제정)
 
-## Core Principles
+Modified Principles:
+- [신규] I. 사양 우선 (Specification-First)
+- [신규] II. 반복적 개선 (Iterative Refinement)
+- [신규] III. 단순성 (Simplicity)
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+Added Sections:
+- 핵심 원칙 (3개 원칙)
+- 작업 분류 체계
+- 개발 워크플로우
+- 거버넌스
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Removed Sections:
+- 없음 (초기 버전)
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+Templates Status:
+- ✅ plan-template.md - Constitution Check 섹션과 정렬됨
+- ✅ spec-template.md - 사용자 스토리 우선순위와 정렬됨
+- ✅ tasks-template.md - 작업 분류 체계와 정렬됨
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Deferred Items:
+- 없음
+============================================================================
+-->
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+# AI프로젝트 관리 Constitution
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## 핵심 원칙
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### I. 사양 우선 (Specification-First)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+모든 기능은 구현 전에 반드시 명세서(Spec)로 시작해야 한다.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**규칙:**
+- 코드 작성 전 `spec.md` 문서가 반드시 존재해야 한다
+- 명세서에는 사용자 시나리오, 기능 요구사항, 성공 기준이 포함되어야 한다
+- 명세서 없는 구현은 허용되지 않는다
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+**근거:** 명확한 요구사항 정의는 재작업을 줄이고, 이해관계자 간 의사소통을 개선하며,
+테스트 가능한 결과물을 보장한다.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### II. 반복적 개선 (Iterative Refinement)
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+개발은 정해진 워크플로우를 따라 단계적으로 진행한다.
+
+**워크플로우:**
+1. **명확화 (Clarify)**: 불명확한 요구사항 질문 및 확인
+2. **사양 (Specify)**: 기능 명세서 작성
+3. **계획 (Plan)**: 구현 계획 및 기술 설계
+4. **작업 (Tasks)**: 실행 가능한 작업 목록 생성
+
+**규칙:**
+- 각 단계는 이전 단계의 산출물에 의존한다
+- 단계를 건너뛰지 않는다
+- 필요시 이전 단계로 돌아가 수정할 수 있다
+
+**근거:** 체계적인 접근은 누락을 방지하고, 진행 상황을 추적 가능하게 하며,
+품질을 보장한다.
+
+### III. 단순성 (Simplicity)
+
+필요한 것만 구현하고, 과잉 엔지니어링을 방지한다.
+
+**규칙:**
+- YAGNI (You Aren't Gonna Need It): 현재 필요하지 않은 기능은 구현하지 않는다
+- 가장 단순한 해결책을 먼저 고려한다
+- 추상화는 실제 중복이 발생했을 때만 도입한다
+- 미래의 가상 요구사항을 위한 설계를 하지 않는다
+
+**근거:** 단순한 코드는 이해하기 쉽고, 유지보수 비용이 낮으며,
+버그 발생 가능성이 적다.
+
+## 작업 분류 체계
+
+모든 작업은 다음 유형 중 하나로 분류되어야 한다:
+
+| 유형 | 설명 | 예시 |
+|------|------|------|
+| **Feature** | 새로운 기능 추가 | 사용자 인증 기능, 보고서 생성 |
+| **Enhancement** | 기존 기능 개선 | 성능 최적화, UX 개선 |
+| **Bug** | 오류 수정 | 로직 오류, 예외 처리 누락 |
+| **Docs** | 문서화 | README 업데이트, API 문서 |
+| **Refactor** | 코드 구조 개선 | 중복 제거, 모듈 분리 |
+
+**커밋 메시지 형식:**
+- `feat: [설명]` - 신규 기능
+- `enhance: [설명]` - 기능 개선
+- `fix: [설명]` - 버그 수정
+- `docs: [설명]` - 문서화
+- `refactor: [설명]` - 리팩토링
+
+## 개발 워크플로우
+
+### 기능 개발 프로세스
+
+```
+1. /speckit.clarify   → 요구사항 명확화
+2. /speckit.specify   → spec.md 생성
+3. /speckit.plan      → plan.md 생성
+4. /speckit.tasks     → tasks.md 생성
+5. /speckit.implement → 구현 실행
+```
+
+### 산출물 위치
+
+```text
+specs/[###-feature-name]/
+├── spec.md           # 기능 명세서
+├── plan.md           # 구현 계획
+├── tasks.md          # 작업 목록
+├── research.md       # 기술 조사 (선택)
+├── data-model.md     # 데이터 모델 (선택)
+└── contracts/        # API 계약 (선택)
+```
+
+## 거버넌스
+
+### 헌법 준수
+
+- 모든 기능 개발은 이 헌법의 원칙을 따라야 한다
+- 원칙 위반이 필요한 경우, 명시적인 정당화와 문서화가 필요하다
+- Plan 문서의 "Constitution Check" 섹션에서 준수 여부를 확인한다
+
+### 헌법 수정
+
+- **MAJOR 변경**: 원칙 삭제 또는 근본적 재정의 (예: 1.0.0 → 2.0.0)
+- **MINOR 변경**: 새 원칙/섹션 추가 또는 중요한 확장 (예: 1.0.0 → 1.1.0)
+- **PATCH 변경**: 문구 수정, 오타 교정, 비의미적 개선 (예: 1.0.0 → 1.0.1)
+
+수정 절차:
+1. 변경 사항 제안 및 문서화
+2. 영향 받는 템플릿 식별
+3. 헌법 업데이트
+4. 관련 템플릿 동기화
+5. Sync Impact Report 작성
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-10 | **Last Amended**: 2025-12-10

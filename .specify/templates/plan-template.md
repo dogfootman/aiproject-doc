@@ -29,9 +29,15 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*GATE: Phase 0 연구 전 통과 필수. Phase 1 설계 후 재확인.*
 
-[Gates determined based on constitution file]
+| 원칙 | 확인 항목 | 상태 |
+|------|-----------|------|
+| **I. 사양 우선** | spec.md가 존재하고 완성되었는가? | ⬜ |
+| **II. 반복적 개선** | 명확화 → 사양 단계를 거쳤는가? | ⬜ |
+| **III. 단순성** | 과잉 엔지니어링 없이 최소 요구사항만 구현하는가? | ⬜ |
+
+**작업 유형**: [ ] Feature / [ ] Enhancement / [ ] Bug / [ ] Docs / [ ] Refactor
 
 ## Project Structure
 
