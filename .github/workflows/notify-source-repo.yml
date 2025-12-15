@@ -1,31 +1,32 @@
-name: Notify Source Repo on Spec Complete
+name: Sync Doc Status to Source Repo
 
 on:
   issues:
-    types: [closed, labeled]
+    types: [labeled]
 
 env:
   SOURCE_REPO: dogfootman/aiproject-src
 
 jobs:
-  notify-ready:
+  # 자동화 A: Doc spec-complete → Source ready-to-implement
+  spec-complete-notify:
     runs-on: ubuntu-latest
-    # spec 라벨이 있고, completed 라벨이 추가되었거나 이슈가 닫힌 경우
-    if: |
-      contains(github.event.issue.labels.*.name, 'spec') &&
-      (contains(github.event.issue.labels.*.name, 'completed') || github.event.action == 'closed')
+    if: github.event.label.name == 'spec-complete'
 
     steps:
       - name: Extract Source Issue Number
         id: extract
         run: |
-          # Issue body에서 Source Issue 번호 추출
           BODY="${{ github.event.issue.body }}"
-          SOURCE_ISSUE=$(echo "$BODY" | grep -oP 'issues/\K[0-9]+' | head -1)
+          # aiproject-src#N 또는 issues/N 형식에서 번호 추출
+          SOURCE_ISSUE=$(echo "$BODY" | grep -oE 'aiproject-src#[0-9]+|aiproject-src/issues/[0-9]+' | grep -oE '[0-9]+' | head -1)
+          if [ -z "$SOURCE_ISSUE" ]; then
+            SOURCE_ISSUE=$(echo "$BODY" | grep -oE 'issues/[0-9]+' | grep -oE '[0-9]+' | head -1)
+          fi
           echo "source_issue=$SOURCE_ISSUE" >> $GITHUB_OUTPUT
           echo "Found source issue: $SOURCE_ISSUE"
 
-      - name: Add Label to Source Issue
+      - name: Update Source Issue
         if: steps.extract.outputs.source_issue != ''
         uses: actions/github-script@v7
         with:
@@ -33,14 +34,7 @@ jobs:
           script: |
             const [owner, repo] = process.env.SOURCE_REPO.split('/');
             const issueNumber = ${{ steps.extract.outputs.source_issue }};
-
-            // ready-to-implement 라벨 추가
-            await github.rest.issues.addLabels({
-              owner,
-              repo,
-              issue_number: issueNumber,
-              labels: ['ready-to-implement']
-            });
+            const docIssueUrl = '${{ github.event.issue.html_url }}';
 
             // spec-pending 라벨 제거
             try {
@@ -51,8 +45,16 @@ jobs:
                 name: 'spec-pending'
               });
             } catch (e) {
-              console.log('spec-pending label not found, skipping removal');
+              console.log('spec-pending label not found');
             }
+
+            // ready-to-implement 라벨 추가
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              labels: ['ready-to-implement']
+            });
 
             // 코멘트 추가
             await github.rest.issues.createComment({
@@ -61,27 +63,20 @@ jobs:
               issue_number: issueNumber,
               body: `## ✅ Spec 작성 완료
 
-            Doc Repo에서 Spec 문서 작성이 완료되었습니다.
+Doc Repo에서 Spec 문서 작성이 완료되었습니다.
 
-            - **Spec Issue**: ${{ github.event.issue.html_url }}
+- **Doc Issue**: ${docIssueUrl}
 
-            ### 구현 시작 가이드
+### 상태 변경
+- \`spec-pending\` → \`ready-to-implement\`
 
-            1. \`develop\` 브랜치에서 새 브랜치 생성
-               \`\`\`bash
-               git checkout develop
-               git pull origin develop
-               git checkout -b fix/${issueNumber}-description
-               \`\`\`
+### 다음 단계
+1. 브랜치 생성 후 구현 시작
+2. 구현 시작 시 \`in-progress\` 라벨 추가
+3. PR 생성 시 이 이슈 연결: \`Closes #${issueNumber}\`
 
-            2. Spec 문서 참고하여 구현
-
-            3. PR 생성 시 이 이슈 연결
-               \`\`\`
-               Closes #${issueNumber}
-               \`\`\`
-
-            ---
-            🤖 *이 코멘트는 자동으로 생성되었습니다.*
-            `
+---
+🤖 *자동 생성됨*`
             });
+
+            console.log(`Updated source issue #${issueNumber}`);
