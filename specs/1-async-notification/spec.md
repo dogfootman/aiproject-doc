@@ -1,8 +1,19 @@
+---
+issueNumber: 1
+issueRepo: doc
+title: Async Notification System (Toast/Alarm)
+phase: plan
+createdAt: 2025-12-12
+updatedAt: 2025-12-16
+---
+
 # Feature Specification: Async Notification System (Toast/Alarm)
 
-**Feature Branch**: `002-async-notification`
+> GitHub Issue: #1 (doc repo)
+
+**Feature Branch**: `1-async-notification`
 **Created**: 2025-12-12
-**Status**: Draft
+**Status**: Plan
 **Input**: User description: "비동기 요청 처리 결과 알림 기능 추가 (Toast/Alarm) - 요청 처리에 대한 성공/실패가 비동기로 이루어지는 경우, 완료 시 사용자에게 Toast 알림(화면 하단/상단 일시적 메시지)과 Alarm/Alert(사용자 확인 필요한 팝업)로 결과를 알려주는 기능"
 
 ## User Scenarios & Testing *(mandatory)*

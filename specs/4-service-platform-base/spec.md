@@ -1,8 +1,19 @@
+---
+issueNumber: 4
+issueRepo: doc
+title: Service Platform Base Application
+phase: specify
+createdAt: 2025-12-10
+updatedAt: 2025-12-16
+---
+
 # Feature Specification: Service Platform Base Application
 
-**Feature Branch**: `001-service-platform-base`
+> GitHub Issue: #4 (doc repo)
+
+**Feature Branch**: `4-service-platform-base`
 **Created**: 2025-12-10
-**Status**: Draft
+**Status**: Specify
 **Input**: Build a foundational application for service delivery. Core features include configuration management, authentication management, menu management, board management, and additional service management capabilities.
 
 ## User Scenarios & Testing *(mandatory)*

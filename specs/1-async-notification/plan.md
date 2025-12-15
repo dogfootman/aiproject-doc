@@ -1,7 +1,7 @@
 # Implementation Plan: Async Notification System (Toast/Alarm)
 
-**Branch**: `002-async-notification` | **Date**: 2025-12-12 | **Spec**: [spec.md](./spec.md)
-**Input**: Feature specification from `/specs/002-async-notification/spec.md`
+**Branch**: `1-async-notification` | **Date**: 2025-12-12 | **Spec**: [spec.md](./spec.md)
+**Input**: Feature specification from `/specs/1-async-notification/spec.md`
 
 ## Summary
 
@@ -36,14 +36,16 @@ Implement a centralized notification system providing Toast notifications for ge
 ### Documentation (this feature)
 
 ```text
-specs/002-async-notification/
-├── plan.md              # This file (/speckit.plan command output)
+specs/1-async-notification/
+├── spec.md              # Specification + Plan (Spec-Kit 규격)
+├── tasks.md             # Tasks 목록 (Spec-Kit 규격)
+├── plan.md              # This file (상세 구현 계획)
 ├── plan_kr.md           # Korean version
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command)
+├── research.md          # Phase 0 output
+├── data-model.md        # Phase 1 output
+├── quickstart.md        # Phase 1 output
+├── contracts/           # Phase 1 output
+└── checklists/          # Requirements checklist
 ```
 
 ### Source Code (repository root)
